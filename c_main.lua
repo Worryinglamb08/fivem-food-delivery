@@ -1,5 +1,5 @@
 local enabled = true 
-local debug = false
+local debug = true
 local ped = nil  
 local pos = nil  
 local penInVeh = nil  
@@ -18,7 +18,8 @@ local currentRoute = {
 local currentblip = nil  
 local stores = {
     ["Wigwam"] = {
-        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0},
+        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0
+        },
         vehicleSpawn = {
             x = -847.770,
             y = -1138.140,
@@ -79,7 +80,8 @@ local stores = {
         }
     },
     ["UpNAtom"] = {
-        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67},
+        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67
+        },
         vehicleSpawn = {
             x = 1580.97,
             y = 6449.5,
@@ -139,6 +141,29 @@ local stores = {
             },]]
         }
     },
+    ["Bite"] = {
+        startLocation = {x = -1539.16, y = -427.63, z = 36.59, h = 232.56},
+        vehicleSpawn = {
+            x = -1533.450,
+            y = -431.460,
+            z = 35.440,
+            h = 227.420,
+            hash = "foodcar5",
+            livery = 6
+        },
+        maxTipAmount = 500,
+        maxTipTime = 5,
+        basePay = 100,
+        noDamageBonus = 150,
+        possibleRoutes = {
+            [1] = { -- Vespucci
+                [1] = {
+                    car = {x = -1403.750, y = -729.640, z = 23.060, h = 307.590},
+                    door = {x = -1392.470, y = -731.430, z = 24.210, h = 220.600}
+                },
+            },
+        }
+    }
 }
 
 local function LoadNewRoute(location)
@@ -188,7 +213,7 @@ local function SpawnVehicle(location)
 end
 
 local function GivePaycheck()
-    if GetVehicleEngineHealth(veh) > 800 then
+    if GetVehicleEngineHealth(veh) > 1000 then
         bonus = stores[currentStore].noDamageBonus
     else
         bonus = 0.0
