@@ -230,7 +230,7 @@ local function SpawnVehicle(location)
     veh = CreateVehicle(hash, stores[location].vehicleSpawn.x, stores[location].vehicleSpawn.y, stores[location].vehicleSpawn.z, stores[location].vehicleSpawn.h, true, false)
     SetVehicleLivery(veh, stores[location].vehicleSpawn.livery)
     TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-    SetVehicleNumberPlateText(veh, "F00DY")
+    SetVehicleNumberPlateText(veh, "F00D13")
 end
 
 local function GivePaycheck()
@@ -259,24 +259,15 @@ local function GivePaycheck()
         currentRoute["routeId"] = nil  
         currentRoute["stopId"] = nil
     else
-        bonus = 0.0
+        exports.pNotify:SendNotification(
+            {
+            text = "You need to finish the route you dumbass.", 
+            type = "error", 
+            timeout = 5000,
+            layout = "centerLeft"
+            }
+        )
     end
-    local amount = stores[currentStore].basePay + (150 * tipTime) + bonus
-    --TriggerServerEvent("addMoney", amount)
-    exports.pNotify:SendNotification(
-        {
-        text = "You got paid $"..amount.." for your services.<br/>Base Pay: $"..stores[currentStore].basePay.."<br/>Speed Bonus: $"..(150 * tipTime).."<br/>Prestine Vehicle Bonus: $"..bonus, 
-        type = "info", 
-        timeout = 5000,
-        layout = "centerLeft"
-        }
-    )
-    SetBlipRoute(currentblip, false)
-    RemoveBlip(currentblip)
-    currentStore = "none"
-    currentRoute["store"] = nil
-    currentRoute["routeId"] = nil  
-    currentRoute["stopId"] = nil
 end
 
 
