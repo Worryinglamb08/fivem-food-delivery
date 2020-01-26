@@ -18,8 +18,7 @@ local currentRoute = {
 local currentblip = nil  
 local stores = {
     ["Wigwam"] = {
-        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0
-        },
+        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0},
         vehicleSpawn = {
             x = -847.770,
             y = -1138.140,
@@ -80,8 +79,7 @@ local stores = {
         }
     },
     ["UpNAtom"] = {
-        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67
-        },
+        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67},
         vehicleSpawn = {
             x = 1580.97,
             y = 6449.5,
@@ -286,7 +284,7 @@ Citizen.CreateThread(function()
         pos = GetEntityCoords(ped, true)
         pedInVeh = IsPedInAnyVehicle(ped, false)
         for k, v in pairs(stores) do  
-            if GetDistanceBetweenCoords(pos, v.startLocation.x, v.startLocation.y, v.startLocation.z, true) < 5 then
+            if GetDistanceBetweenCoords(pos, v.startLocation.x, v.startLocation.y, v.startLocation.z, true) < 2 then
                 if not pedInVeh then 
                     if currentStore == "none" then
                         DrawText3D(pos.x, pos.y, pos.z, "Press [~g~ENTER~w~] to start the job.")
