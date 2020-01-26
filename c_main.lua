@@ -18,8 +18,7 @@ local currentRoute = {
 local currentblip = nil  
 local stores = {
     ["Wigwam"] = {
-        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0
-        },
+        startLocation = {x = -861.700, y = -1140.270, z = 7.390, h = 340.0},
         vehicleSpawn = {
             x = -847.770,
             y = -1138.140,
@@ -80,8 +79,7 @@ local stores = {
         }
     },
     ["UpNAtom"] = {
-        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67
-        },
+        startLocation = {x = 1591.21, y = 6451.04, z = 25.32, h = 325.67},
         vehicleSpawn = {
             x = 1580.97,
             y = 6449.5,
@@ -213,27 +211,38 @@ local function SpawnVehicle(location)
 end
 
 local function GivePaycheck()
-    if GetVehicleEngineHealth(veh) > 1000 then
-        bonus = stores[currentStore].noDamageBonus
+    if currentRoute["stopId"] == nil then
+        if GetVehicleEngineHealth(veh) > 1000 then
+            bonus = stores[currentStore].noDamageBonus
+        else
+            bonus = 0.0
+        end
+        local amount = stores[currentStore].basePay + (150 * tipTime) + bonus
+        --TriggerServerEvent("addMoney", amount)
+        exports.pNotify:SendNotification(
+            {
+            text = "You got paid $"..amount.." for your services.<br/>Base Pay: $"..stores[currentStore].basePay.."<br/>Speed Bonus: $"..(150 * tipTime).."<br/>Prestine Vehicle Bonus: $"..bonus, 
+            type = "info", 
+            timeout = 5000,
+            layout = "centerLeft"
+            }
+        )
+        SetBlipRoute(currentblip, false)
+        RemoveBlip(currentblip)
+        currentStore = "none"
+        currentRoute["store"] = nil
+        currentRoute["routeId"] = nil  
+        currentRoute["stopId"] = nil
     else
-        bonus = 0.0
+        exports.pNotify:SendNotification(
+            {
+            text = "You need to finish your route first dumbass.", 
+            type = "error", 
+            timeout = 5000,
+            layout = "centerLeft"
+            }
+        )
     end
-    local amount = stores[currentStore].basePay + (150 * tipTime) + bonus
-    --TriggerServerEvent("addMoney", amount)
-    exports.pNotify:SendNotification(
-        {
-        text = "You got paid $"..amount.." for your services.<br/>Base Pay: $"..stores[currentStore].basePay.."<br/>Speed Bonus: $"..(150 * tipTime).."<br/>Prestine Vehicle Bonus: $"..bonus, 
-        type = "info", 
-        timeout = 5000,
-        layout = "centerLeft"
-        }
-    )
-    SetBlipRoute(currentblip, false)
-    RemoveBlip(currentblip)
-    currentStore = "none"
-    currentRoute["store"] = nil
-    currentRoute["routeId"] = nil  
-    currentRoute["stopId"] = nil
 end
 
 
